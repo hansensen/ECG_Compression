@@ -15,23 +15,29 @@
 %
 %   Clear our variables
 clear
+warning off
 %   Load data sample
 plotname = 'Lead 1';
 load ecg.mat;
-lead1 = ecgdata(:,2);
+lead1 = ecgdata(1:4500,2);
 size = length(lead1);
-%size = 24;
+%size = 2000;
+a = fir1(100,[0.588,0.7058],'stop');
+%lead1 = filter(a,1,lead1);
 
 lead11(1) = lead1(1);
 lead11(2) = lead1(2);
 for i = 3:1:size
-    lead11(i) = lead1(i) - 2 * lead1(i-1) + lead1(i-2);
+    %lead11(i) = lead1(i) - 2 * lead1(i-1) + lead1(i-2);
+    lead11(i) = lead1(i) - lead1(i-1);
 end
 
 subplot(2, 1, 1); plot(lead1);
 title('\bf1. Original ECG'); ylim([-300 300]);
 subplot(2, 1, 2); plot(lead11);
-title('\bf2. Linear Predictive ECG'); ylim([-50 50]);
+title('\bf2. Linear Predictive ECG'); ylim([-100 100]);
+
+csvwrite('Predicted_ECG.csv',lead11);
 
 k = 0;
 m = 0;
