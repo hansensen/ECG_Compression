@@ -32,10 +32,20 @@ for i = 3:1:size
     lead11(i) = lead1(i) - lead1(i-1);
 end
 
-subplot(2, 1, 1); plot(lead1);
+
+lead12(1) = lead1(1);
+lead12(2) = lead1(2);
+for i = 3:1:size
+    lead12(i) = lead1(i) - 2 * lead1(i-1) + lead1(i-2);
+    %lead11(i) = lead1(i) - lead1(i-1);
+end
+
+subplot(3, 1, 1); plot(lead1);
 title('\bf1. Original ECG'); ylim([-300 300]);
-subplot(2, 1, 2); plot(lead11);
-title('\bf2. Linear Predictive ECG'); ylim([-100 100]);
+subplot(3, 1, 2); plot(lead11);
+title('\bf2. 1st Order Linear Predictive ECG'); ylim([-100 100]);
+subplot(3, 1, 3); plot(lead12);
+title('\bf2. 2nd Order Linear Predictive ECG'); ylim([-100 100]);
 
 csvwrite('Predicted_ECG.csv',lead11);
 
@@ -101,4 +111,5 @@ while (i<=(size-5))
     ecgout(m,1) = ecgo;
 end
 
+disp(m/length(lead1));
 csvwrite('Compressed_ECG.csv',ecgout);

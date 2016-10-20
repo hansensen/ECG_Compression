@@ -52,7 +52,7 @@
     %   Filter by threshold filter
     
     for data = 1:1:length(peaks1)
-        if peaks1(data) < 4
+        if peaks1(data) < 4.3
             peaks1(data) = 0;
         else
             peaks1(data)=1;
@@ -64,7 +64,7 @@
     figure(demo); set(demo, 'Name', strcat(plotname, ' - Processing Stages'));
     %   Original input ECG data
     subplot(3, 1, 1); plot((ecg-min(ecg))/(max(ecg)-min(ecg)));
-    title('\bf1. Original ECG'); ylim([-0.2 1.2]);
+    title('\bf1. Compressed ECG Signal'); ylim([-0.2 1.2]);
 
     %   Filtered ECG (1-st pass) - filter has default window size
     subplot(3, 1, 2); stem((filtered1-min(filtered1))/(max(filtered1)-min(filtered1)));
@@ -72,4 +72,3 @@
     %   Detected peaks in filtered ECG
     subplot(3, 1, 3); stem(peaks1);
     title('\bf4. Detected Peaks'); ylim([0 1.4]);
-
